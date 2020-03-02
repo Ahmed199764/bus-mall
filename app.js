@@ -62,7 +62,9 @@ function render() {
     secondItem = item.all[randomNumber(0, item.all.length - 1)];
     console.log(secondItem);
     thirdItem = item.all[randomNumber(0, item.all.length - 1)];
-    console.log(thirdItem);
+     while (firstItem === secondItem || firstItem === thirdItem|| secondItem === thirdItem) {
+        render();
+            }
     firstImg.setAttribute('src', firstItem.imagePath);
     firstImg.setAttribute('alt', firstItem.name);
     firstImg.setAttribute('title', firstItem.name);
@@ -97,10 +99,6 @@ function handleClickOnItem(event) {
                 }
 
             }
-            
-            // while (firstItem.imagePath === secondItem.imagePath || firstItem.imagePath === thirdItem.imagePath || secondItem.imagePath === thirdItem.imagePath) {
-            //     
-            // }
             render();
             totalClicks++;
             totalViews++;
