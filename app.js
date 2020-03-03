@@ -62,9 +62,10 @@ function render() {
     secondItem = item.all[randomNumber(0, item.all.length - 1)];
     console.log(secondItem);
     thirdItem = item.all[randomNumber(0, item.all.length - 1)];
-     while (firstItem === secondItem || firstItem === thirdItem|| secondItem === thirdItem) {
+    console.log(thirdItem);
+    while (firstItem === secondItem || firstItem === thirdItem || secondItem === thirdItem) {
         render();
-            }
+    }
     firstImg.setAttribute('src', firstItem.imagePath);
     firstImg.setAttribute('alt', firstItem.name);
     firstImg.setAttribute('title', firstItem.name);
@@ -90,7 +91,6 @@ function handleClickOnItem(event) {
                 firstItem.clicks++;
                 firstItem.views++;
                 if (event.target.id === 'second') {
-
                     secondItem.clicks++;
                     secondItem.views++;
                 } else if (event.target.id === 'third') {
@@ -102,15 +102,14 @@ function handleClickOnItem(event) {
             render();
             totalClicks++;
             totalViews++;
+            firstChart()
         }
     } else {
         console.log('more than 25 clicks');
         imageSection.removeEventListener('click', handleClickOnItem);
         render2();
     }
-
 }
-
 function render2() {
     var ulE1 = document.getElementById('summary');
     for (var i = 0; i < item.all.length; i++) {
@@ -122,11 +121,89 @@ function render2() {
     h3.textContent = "Total Clicks :" + totalClicks;
     var h3a = document.getElementById('h3a')
     h3a.textContent = "Total views :" + totalViews;
-
     //var totalViews=
     console.log(totalClicks);
+
+    console.log('testing smth ' + item.clicks);
+
+    // var arrayClicks =[];
+    // var arrayNames = [];
+    // for (var i = 0; i < item.all.length; i++) {
+    //     if(item.all[i] == name)
+    //     {
+    //         arrayNames.push(item.all[i]);
+    //     }
+    //     else{
+    //         arrayClicks.push(item.all[i]);
+    //     }  
+    // }
+    // console.log('clicks : ' +arrayClicks);
+    // console.log('names : '+arrayNames);
 }
 
 function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+// for(var i=0 ;names.length;i++){
+//     var nowClicks =item.clicks;
+//     var nowNames=item.name;
+// }
+// console.log("clicks "+nowNames);
+
+function firstChart() {
+    var ctx = document.getElementById('chartResult').getContext('2d');
+    var chartResult = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["bag.jpg",
+                "banana.jpg",
+                "bathroom.jpg",
+                "boots.jpg",
+                "breakfast.jpg",
+                "bubblegum.jpg",
+                "chair.jpg",
+                "cthulhu.jpg",
+                "dog-duck.jpg",
+                "dragon.jpg",
+                "pen.jpg",
+                "pet-sweep.jpg",
+                "scissors.jpg",
+                "shark.jpg",
+                "sweep.png",
+                "tauntaun.jpg",
+                "unicorn.jpg",
+                "usb.gif",
+                "water-can.jpg",
+                "wine-glass.jpg"],
+            datasets: [{
+                label: '# of clicks' + totalClicks,
+                data: [item.clicks], 
+                //  label: 'total of views'+ `${totalview}`,
+                //data: views,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+}
+
