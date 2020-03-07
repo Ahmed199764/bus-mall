@@ -8,11 +8,13 @@ var itemOfLabels = [];
 var itemVote = [];
 var itemClick = [];
 var imgName = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair',
-    'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass',];
+    'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass',
+];
 var imgPath = ['assets/bag.jpg', 'assets/banana.jpg', 'assets/bathroom.jpg', 'assets/boots.jpg', 'assets/breakfast.jpg', 'assets/bubblegum.jpg', 'assets/chair.jpg',
-    'assets/cthulhu.jpg', 'assets/dog-duck.jpg', 'assets/dragon.jpg', 'assets/pen.jpg', 'assets/pet-sweep.jpg', 'assets/scissors.jpg', 'assets/shark.jpg', 'assets/sweep.png', 'assets/tauntaun.jpg', 'assets/unicorn.jpg', 'assets/usb.gif', 'assets/water-can.jpg', 'assets/wine-glass.jpg',];
+    'assets/cthulhu.jpg', 'assets/dog-duck.jpg', 'assets/dragon.jpg', 'assets/pen.jpg', 'assets/pet-sweep.jpg', 'assets/scissors.jpg', 'assets/shark.jpg', 'assets/sweep.png', 'assets/tauntaun.jpg', 'assets/unicorn.jpg', 'assets/usb.gif', 'assets/water-can.jpg', 'assets/wine-glass.jpg',
+];
 
-var Item = function (imgName, imgPath) {
+var Item = function(imgName, imgPath) {
     this.imgName = imgName;
     this.imgPath = imgPath;
     this.votes = 0;
@@ -21,21 +23,21 @@ var Item = function (imgName, imgPath) {
 };
 
 
-function updateItems() {
-    var itemString = JSON.stringify(imagesStorge);
-    localStorage.setItem('mallItems', itemString);
-}
-//console.log("updating "+updateItems());
+// function updateItems() {
+//     var itemString = JSON.stringify(imagesStorge);
+//     localStorage.setItem('mallItems', itemString);
+// }
 
-function getItems() {
-    var itemString = localStorage.getItem('mallItems');
-    if (itemString) {
-        imagesStorge = JSON.parse(itemString);
-        console.log(imagesStorge);
-        itemsChart();
-    }
-}
-//console.log("getting "+getItems());
+// function getItems() {
+//     var itemString = localStorage.getItem('mallItems');
+//     if (itemString) {
+//         imagesStorge = JSON.parse(itemString);
+//         console.log("imagesStorge : "+imagesStorge);
+//         showImg();
+//         myChart();
+//     }
+// }
+
 
 function createNewImage() {
     for (var i = 0; i < imgPath.length; i++) {
@@ -76,14 +78,14 @@ function showImg() {
 
 showImg();
 alert('Click on images you like to vote :)');
-// getItems();
-// console.log("getting "+getItems());
+pressImage.addEventListener("click", showImgClick);
+
 function showImgClick(event) {
+    event.preventDefault();
     var imgId = event.target.id;
     var imgAlt = event.target.alt;
 
-    if (imgId === 'Store') {
-    } else if (noClicks < 25) {
+    if (imgId === 'Store') {} else if (noClicks < 25) {
         for (var i = 0; i < imagesStorge.length; i++) {
             if (imgAlt === imagesStorge[i].imgName) {
                 imagesStorge[i].votes += 1;
@@ -96,10 +98,11 @@ function showImgClick(event) {
                 document.getElementById('update');
                 update.style.visibility = 'hidden';
                 showImg();
+
             }
         }
     }
-    
+
 }
 
 function updateChart() {
@@ -118,17 +121,17 @@ function itemsChart() {
         data: {
             labels: itemOfLabels,
             datasets: [{
-                label: 'Number Of Votes',
-                data: itemVote,
-                backgroundColor: '#00BFD0',
-                borderWidth: 1
-            },
-            {
-                label: 'Number Of Clicks',
-                data: itemClick,
-                backgroundColor: '#ff6384',
-                borderWidth: 1
-            }
+                    label: 'Number Of Votes',
+                    data: itemVote,
+                    backgroundColor: '#00BFD0',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Number Of Clicks',
+                    data: itemClick,
+                    backgroundColor: '#ff6384',
+                    borderWidth: 1
+                }
             ]
         },
         options: {
@@ -152,5 +155,3 @@ function itemsChart() {
 }
 pressImage.addEventListener('click', showImgClick);
 results.addEventListener('click', itemsChart);
-// updateItems();
-// console.log("updating "+updateItems());
